@@ -1,4 +1,6 @@
 <?php 
+date_default_timezone_set('UTC');
+
 include("inc/functions.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -10,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 include("inc/header.php"); ?>
-
 <div>
   <form method="post" action="index.php">
     <input class="btn btn-primary btn-lg" type="submit" class="button" name="new" value="New" />
