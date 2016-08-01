@@ -37,15 +37,30 @@ function end_current() {
 
 function displayTable() {
   include("connection.php");
-  
+
   $sql = "SELECT begin, end FROM time_entries";
   $result = $db->query($sql);
 
+  $tz = new DateTimeZone('America/New_York');
+  $tf = "Y-m-d H:i:s";
+  
   $html = '<div class="container-fluid">';
   foreach($result as $row) {
+  
+  $begin = date_create($row['begin'])->setTimeZone($tz)->format($tf);
+  if (!is_null($row['end'])) {
+    $end = date_create($row['end'])->setTimeZone($tz)->format($tf);
+  } else {
+    $end = null;
+  }
+  
   $html .= '<div class="row equal">'
-    . '<div class="col-xs-4">' . $row['begin'] . '</div>'
-    . '<div class="col-xs-4">' . $row['end'] . '</div>'
+    . '<div class="col-xs-4">' 
+    . $begin
+    . '</div>'
+    . '<div class="col-xs-4">' 
+    . $end
+    . '</div>'
     . '<div class="col-xs-4">Delete</div>'
     . '</div>';
   }
